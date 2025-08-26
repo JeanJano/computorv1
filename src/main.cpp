@@ -6,7 +6,12 @@ int main(int ac, char **av) {
         cerr << "need the equation argument\nex: '5 * X^0 + 4 * X^1 - 9.3 * X^2 = 1 * X^0'" << endl;
         return (1);
     }
-    // cout << "coucou computer" << endl;
-    string input = av[1];
-    Polynome test(input);
+    try {
+        string input = av[1];
+        Polynome test(input);
+
+    } catch (const char *e) {
+        cerr << "error: " << e << endl;
+    }
+
 }

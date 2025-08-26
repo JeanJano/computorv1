@@ -39,5 +39,16 @@ void    Polynome::get_degree() {
         pos += 1;
     }
 
+    if (degree > 2)
+        throw "polynomial degree can not be above 2";
+
     cout << degree << endl;
+}
+
+void    Polynome::parse_equation() {
+    size_t pos = 0;
+
+    while ((pos = equation.find('X', pos)) != string::npos) {
+        
+    }
 }

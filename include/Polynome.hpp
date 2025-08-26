@@ -15,14 +15,21 @@ class Polynome {
 
     private:
         void    get_degree();
+        void    parse_equation();
 
         string          equation;
         string          reduce_form;
         int             degree;
         vector<float>   solutions;
+        // left part of the equation
         float           a;
         float           b;
         float           c;
+        // rigth part of the equation
+        float           d;
+        float           e;
+        float           f;
+
         float           x0;
         float           x1;
         float           x2;
