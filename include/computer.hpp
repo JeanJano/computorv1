@@ -8,5 +8,6 @@ using namespace std;
 #   include <string>
 #   include "Polynome.hpp"
 
+void reverse(string &str, int n, int i);
 
 #endif

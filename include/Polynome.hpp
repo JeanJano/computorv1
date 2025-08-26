@@ -4,6 +4,7 @@
 
 #   include "computer.hpp"
 #   include <vector>
+#   include <array>
 
 class Polynome {
     public:
@@ -16,6 +17,7 @@ class Polynome {
     private:
         void    get_degree();
         void    parse_equation();
+        void    reduce_equation();
 
         string          equation;
         string          reduce_form;
@@ -26,9 +28,9 @@ class Polynome {
         float           b;
         float           c;
         // rigth part of the equation
-        float           d;
-        float           e;
-        float           f;
+        float           a_;
+        float           b_;
+        float           c_;
 
         float           x0;
         float           x1;
