@@ -51,14 +51,25 @@ void    Polynome::parse_equation() {
     array<float*, 6>    test = {&c, &b, &a, &c_, &b_, &a_};
     size_t              pos = 0;
     int                 i = 0;
-
+    
     while ((pos = equation.find('X', pos)) != string::npos) {
-        string var = "";
-        for (int i = 4; isdigit(equation[pos - i]) || equation[pos - i] == '.'; i++) {
-            var += equation[pos - i];
+        string  var = "";
+        int     sign = 1;
+        int     j = 4;
+
+        for (; isdigit(equation[pos - j]) || equation[pos - j] == '.'; j++) {
+            var += equation[pos - j];
         }
+        j += 1;
+        if (equation[pos - j] == '-')
+            sign = -1;
+        else if (pos - j > 5000000000 && equation[0] == '-')
+            sign = -1;
+        else if (equation[pos - j - 1] == '=')
+            sign = -1;
+        
         reverse(var, var.length() - 1, 0);
-        *test[i] = atof(var.c_str());
+        *test[i] = atof(var.c_str()) * sign;
         pos += 1;
         i++;
     }
