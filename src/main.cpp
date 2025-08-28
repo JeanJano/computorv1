@@ -8,7 +8,8 @@ int main(int ac, char **av) {
     }
     try {
         string input = av[1];
-        Polynome test(input);
+        Polynome pol(input);
+        pol.show();
 
     } catch (const char *e) {
         cerr << "error: " << e << endl;

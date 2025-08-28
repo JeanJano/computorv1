@@ -7,8 +7,14 @@ Polynome::Polynome() {
 Polynome::Polynome(string input) {
     equation = input;
     degree = 0;
+    a = 0;
+    b = 0;
+    c = 0;
+    a_ = 0;
+    b_ = 0;
+    c_ = 0;
     cout << equation << endl;
-    get_degree();
+    find_degree();
     parse_equation();
     reduce_equation();
 }
@@ -29,7 +35,12 @@ Polynome::~Polynome() {
 
 }
 
-void    Polynome::get_degree() {
+void    Polynome::show() {
+    cout << "Reduced form: " << reduce_form << endl;
+    cout << "Polynomial degree: " << degree << endl;
+}
+
+void    Polynome::find_degree() {
     size_t pos = 0;
 
     while ((pos = equation.find('X', pos)) != string::npos) {
@@ -42,11 +53,8 @@ void    Polynome::get_degree() {
 
     if (degree > 2)
         throw "polynomial degree can not be above 2";
-
-    // cout << degree << endl;
 }
 
-// to do: recuper le signe + ou -
 void    Polynome::parse_equation() {
     array<float*, 6>    test = {&c, &b, &a, &c_, &b_, &a_};
     size_t              pos = 0;
@@ -73,14 +81,29 @@ void    Polynome::parse_equation() {
         pos += 1;
         i++;
     }
-    // cout << "a=" << a << " b=" << b << " c=" << c << " a'=" << a_ << " b'=" << b_ << " c'=" << c_ << endl;
 }
 
-// to do: prendre en compte l'operation avec le signe et afficher avec le signe
 void    Polynome::reduce_equation() {
     a = a - a_;
     b = b - b_;
     c = c - c_;
 
-    cout << c << " X^0 " << b << " X^1 " << a << " X^2" << endl;
+    string c_form = float_to_string(c) + " * X^0 ";
+    string b_form = format_string(b, "X^1");
+    string a_form = format_string(a, "X^2");
+
+    reduce_form += c_form + b_form + a_form;
+    reduce_form += "= 0";
+}
+
+
+
+string  Polynome::format_string(float num, string degree) {
+    string str = "";
+    
+    if (num < 0)
+        str = "- " + float_to_string(num * -1) + " * " + degree + " ";
+    else
+        str = "+ " + float_to_string(num) + " * " + degree + " ";
+    return str; 
 }

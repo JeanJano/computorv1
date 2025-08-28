@@ -14,10 +14,14 @@ class Polynome {
         ~Polynome();
         Polynome& operator=(const Polynome &cpy);
 
+        void    show();
+
     private:
-        void    get_degree();
+        void    find_degree();
         void    parse_equation();
         void    reduce_equation();
+
+        string  format_string(float num, string degree);
 
         string          equation;
         string          reduce_form;
