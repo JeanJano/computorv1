@@ -61,24 +61,25 @@ void    Polynome::find_degree() {
 }
 
 void    Polynome::parse_equation_1() {
-    array<float*, 4>    test = {&c, &b, &c_, &b_};
-    fill_var(test);
+    array<float*, 4>    variables = {&b, &a, &b_, &a_};
+
+    fill_var(variables);
 }
 
 void    Polynome::parse_equation_2() {
-    array<float*, 6>    variable = {&c, &b, &a, &c_, &b_, &a_};
+    array<float*, 6>    variables = {&c, &b, &a, &c_, &b_, &a_};
 
-    fill_var(variable);
+    fill_var(variables);
 }
 
 void    Polynome::reduce_equation_1() {
+    a = a - a_;
     b = b - b_;
-    c = c - c_;
 
-    string c_form = float_to_string(c) + " * X^0 ";
-    string b_form = format_string(b, "X^1");
+    string b_form = float_to_string(b) + " * X^0 ";
+    string a_form = format_string(a, "X^1");
 
-    reduce_form += c_form + b_form;
+    reduce_form += b_form + a_form;
     reduce_form += "= 0";
 }
 
