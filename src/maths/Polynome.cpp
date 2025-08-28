@@ -119,7 +119,10 @@ void    Polynome::solution_2() {
 
     cout << discriminant << endl;
     if (discriminant < 0) {
-
+        x1_.set_real(-b);
+        x1_.set_imag(sqrt(-discriminant));
+        x1_.divide_by(2 * a);
+        cout << x1_.get_real() << " " << x1_.get_imag() << endl;
     } else if (discriminant == 0) {
         x0 = -b / (2 * a);
         cout << x0 << endl;

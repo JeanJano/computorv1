@@ -14,4 +14,5 @@ float sqrt(float n) {
         }
         x = root;
     }
+    return 0;
 }

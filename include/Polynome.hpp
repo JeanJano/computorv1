@@ -5,8 +5,7 @@
 #   include "computer.hpp"
 #   include <vector>
 #   include <array>
-
-
+#   include "Complex.hpp"
 
 class Polynome {
     public:
@@ -48,6 +47,8 @@ class Polynome {
         float           x0;
         float           x1;
         float           x2;
+        Complex         x1_;
+        Complex         x2_;
 };
 
 
