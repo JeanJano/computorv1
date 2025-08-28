@@ -2,8 +2,10 @@
 #   define COMPLEX_HPP
 
 using namespace std;
+#   include <iostream>
 #   include <string>
 std::string float_to_string(double value);
+float       abso(float n);
 
 class Complex {
     public:
@@ -16,8 +18,9 @@ class Complex {
         void    set_real(float real);
         void    set_imag(float imag);
 
-        string   get_real();
-        string   get_imag();
+        string  get_real();
+        string  get_imag();
+        string  get_equation();
 
         void    divide_by(float num);
 

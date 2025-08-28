@@ -17,13 +17,13 @@ Polynome::Polynome(string input) {
     x0 = 0;
     x1 = 0;
     x2 = 0;
-    cout << equation << endl;
+    // cout << equation << endl;
     find_degree();
     if (degree == 1) {
         parse_equation_1();
         reduce_equation_1();
         solution_1();
-    } else {
+    } else if (degree == 2) {
         parse_equation_2();
         reduce_equation_2();
         solution_2();
@@ -49,6 +49,29 @@ Polynome::~Polynome() {
 void    Polynome::show() {
     cout << "Reduced form: " << reduce_form << endl;
     cout << "Polynomial degree: " << degree << endl;
+    if (degree == 1) {
+        if (b == 0 && a != 0) {
+            // x0 = 0;
+        } else if (a == 0) {
+            // no solution;
+            throw "No Solution";
+        } else {
+            cout << "The solution is:" << endl;
+            cout << x0 << endl;
+        }
+    } else if (degree == 2) {
+        if (discriminant < 0) {
+            cout << "Discriminant is strictly negative, the two complex solutions are:" << endl;
+            cout << x1_.get_equation() << endl;
+            cout << x2_.get_equation() << endl;
+        } else if (discriminant == 0) {
+
+        } else if (discriminant > 0) {
+            cout << "Discriminant is strictly positive, the two solutions are:" << endl;
+            cout << x1 << endl;
+            cout << x2 << endl;
+        }
+    }
 }
 
 void    Polynome::find_degree() {
@@ -111,25 +134,29 @@ void    Polynome::solution_1() {
     } else {
         x0 = -b / a;
     }
-    cout << x0 << endl;
+    // cout << x0 << endl;
 }
 
 void    Polynome::solution_2() {
     discriminant = b * b - 4 * a *c;
 
-    cout << discriminant << endl;
+    // cout << discriminant << endl;
     if (discriminant < 0) {
         x1_.set_real(-b);
-        x1_.set_imag(sqrt(-discriminant));
+        x1_.set_imag(-sqrt(-discriminant));
         x1_.divide_by(2 * a);
-        cout << x1_.get_real() << " " << x1_.get_imag() << endl;
+        x2_.set_real(-b);
+        x2_.set_imag(sqrt(-discriminant));
+        x2_.divide_by(2 * a);
+        // cout << x1_.get_equation() << endl << x2_.get_equation() << endl;
+
     } else if (discriminant == 0) {
         x0 = -b / (2 * a);
-        cout << x0 << endl;
+        // cout << x0 << endl;
     } else if (discriminant > 0) {
         x1 = (-b - sqrt(discriminant)) / (2 * a);
         x2 = (-b + sqrt(discriminant)) / (2 * a);
-        cout << x1 << endl << x2 << endl;
+        // cout << x1 << endl << x2 << endl;
     }
 }
 
