@@ -6,6 +6,8 @@
 #   include <vector>
 #   include <array>
 
+
+
 class Polynome {
     public:
         Polynome();
@@ -18,9 +20,13 @@ class Polynome {
 
     private:
         void    find_degree();
-        void    parse_equation();
-        void    reduce_equation();
+        void    parse_equation_1();
+        void    parse_equation_2();
+        void    reduce_equation_1();
+        void    reduce_equation_2();
 
+        template <size_t N>
+        void    fill_var(array<float*, N> &variable);
         string  format_string(float num, string degree);
 
         string          equation;

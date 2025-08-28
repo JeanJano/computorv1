@@ -15,8 +15,13 @@ Polynome::Polynome(string input) {
     c_ = 0;
     cout << equation << endl;
     find_degree();
-    parse_equation();
-    reduce_equation();
+    if (degree == 1) {
+        parse_equation_1();
+        reduce_equation_1();
+    } else {
+        parse_equation_2();
+        reduce_equation_2();
+    }
 }
 
 Polynome::Polynome(const Polynome &cpy) {
@@ -55,11 +60,46 @@ void    Polynome::find_degree() {
         throw "polynomial degree can not be above 2";
 }
 
-void    Polynome::parse_equation() {
-    array<float*, 6>    test = {&c, &b, &a, &c_, &b_, &a_};
+void    Polynome::parse_equation_1() {
+    array<float*, 4>    test = {&c, &b, &c_, &b_};
+    fill_var(test);
+}
+
+void    Polynome::parse_equation_2() {
+    array<float*, 6>    variable = {&c, &b, &a, &c_, &b_, &a_};
+
+    fill_var(variable);
+}
+
+void    Polynome::reduce_equation_1() {
+    b = b - b_;
+    c = c - c_;
+
+    string c_form = float_to_string(c) + " * X^0 ";
+    string b_form = format_string(b, "X^1");
+
+    reduce_form += c_form + b_form;
+    reduce_form += "= 0";
+}
+
+void    Polynome::reduce_equation_2() {
+    a = a - a_;
+    b = b - b_;
+    c = c - c_;
+
+    string c_form = float_to_string(c) + " * X^0 ";
+    string b_form = format_string(b, "X^1");
+    string a_form = format_string(a, "X^2");
+
+    reduce_form += c_form + b_form + a_form;
+    reduce_form += "= 0";
+}
+
+
+template <size_t N>
+void    Polynome ::fill_var(array<float*, N> &variables) {
     size_t              pos = 0;
     int                 i = 0;
-    
     while ((pos = equation.find('X', pos)) != string::npos) {
         string  var = "";
         int     sign = 1;
@@ -77,26 +117,11 @@ void    Polynome::parse_equation() {
             sign = -1;
         
         reverse(var, var.length() - 1, 0);
-        *test[i] = atof(var.c_str()) * sign;
+        *variables[i] = atof(var.c_str()) * sign;
         pos += 1;
         i++;
     }
 }
-
-void    Polynome::reduce_equation() {
-    a = a - a_;
-    b = b - b_;
-    c = c - c_;
-
-    string c_form = float_to_string(c) + " * X^0 ";
-    string b_form = format_string(b, "X^1");
-    string a_form = format_string(a, "X^2");
-
-    reduce_form += c_form + b_form + a_form;
-    reduce_form += "= 0";
-}
-
-
 
 string  Polynome::format_string(float num, string degree) {
     string str = "";
