@@ -13,14 +13,20 @@ Polynome::Polynome(string input) {
     a_ = 0;
     b_ = 0;
     c_ = 0;
+    discriminant = 0;
+    x0 = 0;
+    x1 = 0;
+    x2 = 0;
     cout << equation << endl;
     find_degree();
     if (degree == 1) {
         parse_equation_1();
         reduce_equation_1();
+        solution_1();
     } else {
         parse_equation_2();
         reduce_equation_2();
+        solution_2();
     }
 }
 
@@ -94,6 +100,34 @@ void    Polynome::reduce_equation_2() {
 
     reduce_form += c_form + b_form + a_form;
     reduce_form += "= 0";
+}
+
+void    Polynome::solution_1() {
+    if (b == 0 && a != 0) {
+        x0 = 0;
+    } else if (a == 0) {
+        // no solution;
+        throw "No Solution";
+    } else {
+        x0 = -b / a;
+    }
+    cout << x0 << endl;
+}
+
+void    Polynome::solution_2() {
+    discriminant = b * b - 4 * a *c;
+
+    cout << discriminant << endl;
+    if (discriminant < 0) {
+
+    } else if (discriminant == 0) {
+        x0 = -b / (2 * a);
+        cout << x0 << endl;
+    } else if (discriminant > 0) {
+        x1 = (-b - sqrt(discriminant)) / (2 * a);
+        x2 = (-b + sqrt(discriminant)) / (2 * a);
+        cout << x1 << endl << x2 << endl;
+    }
 }
 
 

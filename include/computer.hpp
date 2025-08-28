@@ -10,5 +10,6 @@ using namespace std;
 
 void        reverse(string &str, int n, int i);
 std::string float_to_string(double value);
+float       sqrt(float n);
 
 #endif

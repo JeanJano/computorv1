@@ -24,6 +24,8 @@ class Polynome {
         void    parse_equation_2();
         void    reduce_equation_1();
         void    reduce_equation_2();
+        void    solution_1();
+        void    solution_2();
 
         template <size_t N>
         void    fill_var(array<float*, N> &variable);
@@ -32,7 +34,8 @@ class Polynome {
         string          equation;
         string          reduce_form;
         int             degree;
-        vector<float>   solutions;
+        float           discriminant;
+        // vector<float>   solutions;
         // left part of the equation
         float           a;
         float           b;
