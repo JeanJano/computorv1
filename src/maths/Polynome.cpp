@@ -7,29 +7,15 @@ Polynome::Polynome() {
 Polynome::Polynome(string input) {
     equation = input;
     degree = 0;
-    a = 0;
-    b = 0;
-    c = 0;
-    a_ = 0;
-    b_ = 0;
-    c_ = 0;
     discriminant = 0;
     x0 = 0;
     x1 = 0;
     x2 = 0;
     // cout << equation << endl;
-    // find_degree();
     parse_equation();
     reduce_equation();
-    // if (degree == 1) {
-    //     parse_equation_1();
-    //     reduce_equation_1();
-    //     solution_1();
-    // } else if (degree == 2) {
-    //     parse_equation_2();
-    //     reduce_equation_2();
-    //     solution_2();
-    // }
+    find_degree();
+    solve();
 }
 
 Polynome::Polynome(const Polynome &cpy) {
@@ -56,7 +42,7 @@ void    Polynome::show() {
             // x0 = 0;
         } else if (a == 0) {
             // no solution;
-            throw "No Solution";
+            cout << "No Solution" << endl;
         } else {
             cout << "The solution is:" << endl;
             cout << x0 << endl;
@@ -73,6 +59,8 @@ void    Polynome::show() {
             cout << x1 << endl;
             cout << x2 << endl;
         }
+    } else if (degree > 2) {
+        cout << "The polynomial degree is strictly greater than 2, I can't solve." << endl;
     }
 }
 
@@ -86,9 +74,6 @@ void    Polynome::find_degree() {
             degree = deg;
         pos += 1;
     }
-
-    if (degree > 2)
-        throw "The polynomial degree is strictly greater than 2, I can't solve.";
 }
 
 void    Polynome::reduce_equation() {
@@ -126,8 +111,19 @@ void    Polynome::reduce_equation() {
 
 }
 
+void    Polynome::solve() {
+    if (degree == 1)
+        solution_1();
+    else if (degree == 2) 
+        solution_2();
+}
 
 void    Polynome::solution_1() {
+    auto it = left_values.begin();
+    b = *it;
+    ++it;
+    a = *it;
+
     if (b == 0 && a != 0) {
         x0 = 0;
     } else if (a == 0) {
@@ -140,6 +136,13 @@ void    Polynome::solution_1() {
 }
 
 void    Polynome::solution_2() {
+    auto it = left_values.begin();
+    c = *it;
+    ++it;
+    b = *it;
+    ++it;
+    a = *it;
+
     discriminant = b * b - 4 * a *c;
 
     // cout << discriminant << endl;
