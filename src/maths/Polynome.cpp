@@ -18,16 +18,18 @@ Polynome::Polynome(string input) {
     x1 = 0;
     x2 = 0;
     // cout << equation << endl;
-    find_degree();
-    if (degree == 1) {
-        parse_equation_1();
-        reduce_equation_1();
-        solution_1();
-    } else if (degree == 2) {
-        parse_equation_2();
-        reduce_equation_2();
-        solution_2();
-    }
+    // find_degree();
+    parse_equation();
+    reduce_equation();
+    // if (degree == 1) {
+    //     parse_equation_1();
+    //     reduce_equation_1();
+    //     solution_1();
+    // } else if (degree == 2) {
+    //     parse_equation_2();
+    //     reduce_equation_2();
+    //     solution_2();
+    // }
 }
 
 Polynome::Polynome(const Polynome &cpy) {
@@ -86,44 +88,44 @@ void    Polynome::find_degree() {
     }
 
     if (degree > 2)
-        throw "polynomial degree can not be above 2";
+        throw "The polynomial degree is strictly greater than 2, I can't solve.";
 }
 
-void    Polynome::parse_equation_1() {
-    array<float*, 4>    variables = {&b, &a, &b_, &a_};
+void    Polynome::reduce_equation() {
+    int l = right_values.size();
+    auto left_it = left_values.begin();
+    auto right_it = right_values.begin();
 
-    fill_var(variables);
-}
+    for (int i = 0; i < l; i++) {
+        float left = *left_it;
+        float right = *right_it;
+        left = left - right;
+        *left_it = left;
+        *right_it = 0;
 
-void    Polynome::parse_equation_2() {
-    array<float*, 6>    variables = {&c, &b, &a, &c_, &b_, &a_};
+        ++left_it;
+        ++right_it;
+    }
 
-    fill_var(variables);
-}
+    l = left_values.size();
+    left_it = left_values.begin();
+    reduce_form += float_to_string(*left_it) + " * X^0 ";
+    ++left_it;
+    for (float deg = 1; deg < l; deg++) {
+        string d = float_to_string(deg);
+        reduce_form += format_string(*left_it, "X^" + d);
+        
+        ++left_it;
+    }
 
-void    Polynome::reduce_equation_1() {
-    a = a - a_;
-    b = b - b_;
-
-    string b_form = float_to_string(b) + " * X^0 ";
-    string a_form = format_string(a, "X^1");
-
-    reduce_form += b_form + a_form;
     reduce_form += "= 0";
+
+    // for (auto it = left_values.begin(); it != left_values.end(); ++it) {
+    //     cout << *it << endl;
+    // }
+
 }
 
-void    Polynome::reduce_equation_2() {
-    a = a - a_;
-    b = b - b_;
-    c = c - c_;
-
-    string c_form = float_to_string(c) + " * X^0 ";
-    string b_form = format_string(b, "X^1");
-    string a_form = format_string(a, "X^2");
-
-    reduce_form += c_form + b_form + a_form;
-    reduce_form += "= 0";
-}
 
 void    Polynome::solution_1() {
     if (b == 0 && a != 0) {
@@ -160,19 +162,18 @@ void    Polynome::solution_2() {
     }
 }
 
-
-template <size_t N>
-void    Polynome ::fill_var(array<float*, N> &variables) {
-    size_t              pos = 0;
-    int                 i = 0;
+void    Polynome::parse_equation() {
+    size_t  pos = 0;
+    size_t  equal_pos = equation.find('=', 0);
+    // cout << equal_pos << " " << equation[equal_pos] << endl;
     while ((pos = equation.find('X', pos)) != string::npos) {
         string  var = "";
         int     sign = 1;
         int     j = 4;
-
         for (; isdigit(equation[pos - j]) || equation[pos - j] == '.'; j++) {
             var += equation[pos - j];
         }
+
         j += 1;
         if (equation[pos - j] == '-')
             sign = -1;
@@ -180,13 +181,28 @@ void    Polynome ::fill_var(array<float*, N> &variables) {
             sign = -1;
         else if (equation[pos - j - 1] == '=')
             sign = -1;
-        
+
         reverse(var, var.length() - 1, 0);
-        *variables[i] = atof(var.c_str()) * sign;
-        pos += 1;
-        i++;
+
+        if (pos < equal_pos) {
+            left_values.push_back(atof(var.c_str()) * sign);
+        } else {
+            right_values.push_back(atof(var.c_str()) * sign);
+        }
+        pos++;
     }
+
+    // cout << "left" << endl;
+    // for (auto it = left_values.begin(); it != left_values.end(); ++it) {
+    //     cout << *it << endl;
+    // }
+    // cout << "right" << endl;
+    
+    // for (auto it = right_values.begin(); it != right_values.end(); ++it) {
+    //     cout << *it << endl;
+    // }
 }
+
 
 string  Polynome::format_string(float num, string degree) {
     string str = "";

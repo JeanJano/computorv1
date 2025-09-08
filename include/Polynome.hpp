@@ -19,8 +19,10 @@ class Polynome {
 
     private:
         void    find_degree();
-        void    parse_equation_1();
-        void    parse_equation_2();
+        void    parse_equation();
+        void    reduce_equation();
+        // void    parse_equation_1();
+        // void    parse_equation_2();
         void    reduce_equation_1();
         void    reduce_equation_2();
         void    solution_1();
@@ -36,10 +38,12 @@ class Polynome {
         float           discriminant;
         // vector<float>   solutions;
         // left part of the equation
+        vector<float>   left_values;
         float           a;
         float           b;
         float           c;
         // rigth part of the equation
+        vector<float>   right_values;
         float           a_;
         float           b_;
         float           c_;
