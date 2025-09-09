@@ -14,7 +14,6 @@ class Complex {
         Complex(const Complex &cpy);
         ~Complex();
         Complex& operator=(const Complex &cpy);
-        Complex operator/(float d) const;
 
         void    set_real(float real);
         void    set_imag(float imag);

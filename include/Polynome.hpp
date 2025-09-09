@@ -22,6 +22,7 @@ class Polynome {
         void    parse_equation();
         void    reduce_equation();
         void    solve();
+        void    solution_0();
         void    solution_1();
         void    solution_2();
 

@@ -21,10 +21,6 @@ Complex    &Complex::operator=(const Complex &cpy) {
     return (*this);
 }
 
-Complex     Complex::operator/(float d) const {
-    return Complex(real / d, imag / d);
-}
-
 Complex::~Complex() {
 
 }

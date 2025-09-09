@@ -11,7 +11,9 @@ Polynome::Polynome(string input) {
     x0 = 0;
     x1 = 0;
     x2 = 0;
-    // cout << equation << endl;
+    a = 0;
+    b = 0;
+    c = 0;
     parse_equation();
     reduce_equation();
     find_degree();
@@ -37,16 +39,16 @@ Polynome::~Polynome() {
 void    Polynome::show() {
     cout << "Reduced form: " << reduce_form << endl;
     cout << "Polynomial degree: " << degree << endl;
-    if (degree == 1) {
-        if (b == 0 && a != 0) {
-            // x0 = 0;
-        } else if (a == 0) {
-            // no solution;
-            cout << "No Solution" << endl;
-        } else {
-            cout << "The solution is:" << endl;
-            cout << x0 << endl;
+    if (degree == 0) {
+        cout << a << " " << b << endl;
+        if (b != 0) {
+            cout << "No solution." << endl;
+        } else if (b == 0) {
+            cout << "Any real number is a solution." << endl;
         }
+    } else if (degree == 1) {
+        cout << "The solution is:" << endl;
+        cout << x0 << endl;
     } else if (degree == 2) {
         if (discriminant < 0) {
             cout << "Discriminant is strictly negative, the two complex solutions are:" << endl;
@@ -104,18 +106,20 @@ void    Polynome::reduce_equation() {
     }
 
     reduce_form += "= 0";
-
-    // for (auto it = left_values.begin(); it != left_values.end(); ++it) {
-    //     cout << *it << endl;
-    // }
-
 }
 
 void    Polynome::solve() {
+    if (degree == 0)
+        solution_0();
     if (degree == 1)
         solution_1();
     else if (degree == 2) 
         solution_2();
+}
+
+void    Polynome::solution_0() {
+    auto it = left_values.begin();
+    b = *it;
 }
 
 void    Polynome::solution_1() {
@@ -124,15 +128,12 @@ void    Polynome::solution_1() {
     ++it;
     a = *it;
 
-    if (b == 0 && a != 0) {
+    if (b == 0 && a != 0)
         x0 = 0;
-    } else if (a == 0) {
-        // no solution;
+    else if (a == 0)
         throw "No Solution";
-    } else {
+    else
         x0 = -b / a;
-    }
-    // cout << x0 << endl;
 }
 
 void    Polynome::solution_2() {
@@ -188,16 +189,6 @@ void    Polynome::parse_equation() {
         }
         pos++;
     }
-
-    // cout << "left" << endl;
-    // for (auto it = left_values.begin(); it != left_values.end(); ++it) {
-    //     cout << *it << endl;
-    // }
-    // cout << "right" << endl;
-    
-    // for (auto it = right_values.begin(); it != right_values.end(); ++it) {
-    //     cout << *it << endl;
-    // }
 }
 
 
