@@ -14,23 +14,15 @@ class Complex {
         Complex(const Complex &cpy);
         ~Complex();
         Complex& operator=(const Complex &cpy);
+        Complex operator/(float d) const;
 
         void    set_real(float real);
         void    set_imag(float imag);
-
-        string  get_real();
-        string  get_imag();
-        string  get_equation();
-
-        void    divide_by(float num);
+        string  to_string() const;
 
     private:
-        int     find_grand_commun_demoninator(float a, float b);
-        // void    simplify();
         float   real;
         float   imag;
-        string  real_;
-        string  imag_;
 };
 
 

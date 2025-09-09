@@ -50,8 +50,8 @@ void    Polynome::show() {
     } else if (degree == 2) {
         if (discriminant < 0) {
             cout << "Discriminant is strictly negative, the two complex solutions are:" << endl;
-            cout << x1_.get_equation() << endl;
-            cout << x2_.get_equation() << endl;
+            cout << x1_.to_string() << endl;
+            cout << x2_.to_string() << endl;
         } else if (discriminant == 0) {
 
         } else if (discriminant > 0) {
@@ -145,30 +145,24 @@ void    Polynome::solution_2() {
 
     discriminant = b * b - 4 * a *c;
 
-    // cout << discriminant << endl;
     if (discriminant < 0) {
-        x1_.set_real(-b);
-        x1_.set_imag(-sqrt(-discriminant));
-        x1_.divide_by(2 * a);
-        x2_.set_real(-b);
-        x2_.set_imag(sqrt(-discriminant));
-        x2_.divide_by(2 * a);
-        // cout << x1_.get_equation() << endl << x2_.get_equation() << endl;
+        float real_part = -b / (2 * a);
+        float imag_part = sqrt(-discriminant) / (2 * a);
+
+        x1_ = Complex(real_part, -imag_part);
+        x2_ = Complex(real_part, imag_part);
 
     } else if (discriminant == 0) {
         x0 = -b / (2 * a);
-        // cout << x0 << endl;
     } else if (discriminant > 0) {
         x1 = (-b - sqrt(discriminant)) / (2 * a);
         x2 = (-b + sqrt(discriminant)) / (2 * a);
-        // cout << x1 << endl << x2 << endl;
     }
 }
 
 void    Polynome::parse_equation() {
     size_t  pos = 0;
     size_t  equal_pos = equation.find('=', 0);
-    // cout << equal_pos << " " << equation[equal_pos] << endl;
     while ((pos = equation.find('X', pos)) != string::npos) {
         string  var = "";
         int     sign = 1;
