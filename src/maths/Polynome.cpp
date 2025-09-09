@@ -53,9 +53,10 @@ void    Polynome::show() {
             cout << "Discriminant is strictly negative, the two complex solutions are:" << endl;
             cout << x1_.to_string() << endl;
             cout << x2_.to_string() << endl;
-        } else if (discriminant == 0)
+        } else if (discriminant == 0) {
+            cout << "Discriminant is equal to 0, the solution is:" << endl;
             cout << x0 << endl;
-        else if (discriminant > 0) {
+        } else if (discriminant > 0) {
             cout << "Discriminant is strictly positive, the two solutions are:" << endl;
             cout << x1 << endl;
             cout << x2 << endl;
@@ -165,26 +166,24 @@ void    Polynome::parse_equation() {
     while ((pos = equation.find('X', pos)) != string::npos) {
         string  var = "";
         int     sign = 1;
-        int     j = 4;
-        for (; isdigit(equation[pos - j]) || equation[pos - j] == '.'; j++) {
+        size_t     j = 4;
+        while (pos >= j && (isdigit(equation[pos - j]) || equation[pos - j] == '.')) {
             var += equation[pos - j];
+            j++;
         }
 
         j += 1;
-        if (equation[pos - j] == '-')
+        if (pos >= j && equation[pos - j] == '-')
             sign = -1;
-        else if (pos - j > 5000000000 && equation[0] == '-')
-            sign = -1;
-        else if (equation[pos - j - 1] == '=')
+        else if (pos >= j + 1 && equation[pos - j - 1] == '=')
             sign = -1;
 
         reverse(var, var.length() - 1, 0);
 
-        if (pos < equal_pos) {
+        if (pos < equal_pos)
             left_values.push_back(atof(var.c_str()) * sign);
-        } else {
+        else
             right_values.push_back(atof(var.c_str()) * sign);
-        }
         pos++;
     }
 }
