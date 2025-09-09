@@ -11,7 +11,7 @@ OBJS			:=	$(SRCS:$(SRC_DIR)/%.cpp=$(OBJ_DIR)/%.o)
 DEPS			:=	$(OBJS:.o=.d)  # Gestion des fichiers de dépendances
 
 # Target
-TARGET			:=	computer
+TARGET			:=	computor
 
 # Targets
 all: $(TARGET)

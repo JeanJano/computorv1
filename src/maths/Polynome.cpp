@@ -38,14 +38,13 @@ Polynome::~Polynome() {
 
 void    Polynome::show() {
     cout << "Reduced form: " << reduce_form << endl;
-    cout << "Polynomial degree: " << degree << endl;
+    if (degree != 0)
+        cout << "Polynomial degree: " << degree << endl;
     if (degree == 0) {
-        cout << a << " " << b << endl;
-        if (b != 0) {
+        if (b != 0)
             cout << "No solution." << endl;
-        } else if (b == 0) {
+        else if (b == 0)
             cout << "Any real number is a solution." << endl;
-        }
     } else if (degree == 1) {
         cout << "The solution is:" << endl;
         cout << x0 << endl;
@@ -54,16 +53,15 @@ void    Polynome::show() {
             cout << "Discriminant is strictly negative, the two complex solutions are:" << endl;
             cout << x1_.to_string() << endl;
             cout << x2_.to_string() << endl;
-        } else if (discriminant == 0) {
-
-        } else if (discriminant > 0) {
+        } else if (discriminant == 0)
+            cout << x0 << endl;
+        else if (discriminant > 0) {
             cout << "Discriminant is strictly positive, the two solutions are:" << endl;
             cout << x1 << endl;
             cout << x2 << endl;
         }
-    } else if (degree > 2) {
+    } else if (degree > 2)
         cout << "The polynomial degree is strictly greater than 2, I can't solve." << endl;
-    }
 }
 
 void    Polynome::find_degree() {
