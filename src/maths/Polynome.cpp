@@ -186,6 +186,9 @@ void    Polynome::parse_equation() {
             right_values.push_back(atof(var.c_str()) * sign);
         pos++;
     }
+
+    if (left_values.size() == 0 && right_values.size() == 0)
+        throw "parsing not valid";
 }
 
 
